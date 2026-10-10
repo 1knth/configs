@@ -44,8 +44,7 @@ if [ "$(echo "$RAIN_NEXT_2HRS > 0" | bc -l)" -eq 1 ]; then
   FORMATTED_RAIN=$(printf "%.1f" "$RAIN_NEXT_2HRS")
   LABEL="$TEMP_LABEL, ${FORMATTED_RAIN} mm"
   
-  COLOR="0xFF89b4fa"
-  sketchybar --set "$NAME" icon="$ICON" label="$LABEL" icon.color=$COLOR label.color=$COLOR
+  sketchybar --set "$NAME" icon="$ICON" label="$LABEL"
 else
   LABEL="$TEMP_LABEL"
   sketchybar --set "$NAME" icon="$ICON" label="$LABEL"

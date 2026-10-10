@@ -3,7 +3,12 @@
 source "$CONFIG_DIR/colors.sh"
 
 PERCENTAGE="$(pmset -g batt | grep -Eo "\d+%" | cut -d% -f1)"
-CHARGING="$(pmset -g batt | grep 'AC Power')"
+POWER_SOURCE="$(pmset -g ps | awk -F"'" '/Now drawing from/ { print $2; exit }')"
+LOW_POWER_MODE="$(pmset -g | awk '/lowpowermode/ { print $2; exit }')"
+
+if [ "$SENDER" = "power_source_change" ] && [ -n "$INFO" ]; then
+  POWER_SOURCE="$INFO"
+fi
 
 if [ "$PERCENTAGE" = "" ]; then
   exit 0
@@ -21,19 +26,20 @@ case "${PERCENTAGE}" in
   *) ICON=""
 esac
 
-# Check charging status first
-if [[ "$CHARGING" != "" ]]; then
+# Green is reserved for the plugged-in AC state. On plug-in, SketchyBar's
+# power_source_change event can arrive before pmset reports "charging", so use
+# the event's $INFO when available.
+if [ "$POWER_SOURCE" = "AC" ] || [ "$POWER_SOURCE" = "AC Power" ]; then
   ICON=""
   COLOR="$GREEN"
+elif [ "$PERCENTAGE" -le 20 ]; then
+  COLOR="$RED"
+elif [ "$LOW_POWER_MODE" = "1" ]; then
+  COLOR="$YELLOW"
+elif [ "$PERCENTAGE" -le 40 ]; then
+  COLOR="$ORANGE"
 else
-  # Only apply percentage colors if NOT charging
-  if [ "$PERCENTAGE" -le 30 ]; then
-    COLOR="$RED"
-  elif [ "$PERCENTAGE" -le 40 ]; then
-    COLOR="$ORANGE"
-  else
-    COLOR="$WHITE"
-  fi
+  COLOR="$GLASS_TEXT"
 fi
 
 sketchybar --set "$NAME" \

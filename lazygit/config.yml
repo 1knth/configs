@@ -1,0 +1,23 @@
+# Minimal Lazygit colors matched to Ghostty/Neovim
+# Lazygit uses the terminal background; in Ghostty that is #181616.
+
+gui:
+  border: rounded
+  showRandomTip: false
+  showCommandLog: false
+  theme:
+    defaultFgColor:
+      - "#cdd6f4"
+    activeBorderColor:
+      - "#89b4fa"
+      - bold
+    inactiveBorderColor:
+      - "#585b70"
+    selectedLineBgColor:
+      - "#282727"
+    inactiveViewSelectedLineBgColor:
+      - "#282727"
+    optionsTextColor:
+      - "#89b4fa"
+    unstagedChangesColor:
+      - "#f38ba8"

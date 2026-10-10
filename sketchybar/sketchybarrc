@@ -6,104 +6,143 @@ PLUGIN_DIR="$CONFIG_DIR/plugins"
 
 ##### Bar Appearance #####
 sketchybar --bar position=top \
-                 height=35 \
-                 blur_radius=50 \
-                 color=0x00000000 
+  height=36 \
+  blur_radius=60 \
+  color=0x00000000
+# color=0xd0ffffff
 
 ##### Changing Defaults #####
 # Ensure "Hack Nerd Font" is installed.
-# You can create your own icon pack to fix the broken icons
+# If icons still don't show, check Font Book for the exact name.
 default=(
   padding_left=3
   padding_right=3
-  icon.font="Hack Nerd Font:Regular:16.0"
-  label.font="SF Pro:Semibold:15.0"
-  icon.color=$WHITE
-  label.color=$WHITE
-  icon.padding_left=10
+  # icon.font="Hack Nerd Font:Regular:16.0"
+  label.font="SF Pro:Semibold:16.0"
+  # label.font="Iosevka:Semibold:20.0"
+  # label.font="JetBrains Nerd Font:Semibold:15.0"
+  icon.color=$GLASS_TEXT
+  label.color=$GLASS_TEXT
+  icon.padding_left=9.8
   icon.padding_right=0
-  label.padding_left=5
+  label.padding_left=8
   label.padding_right=10
-  background.color=0x40000000
+  # background.color=0x40000000
+  background.color=0x00eeeeee
+  # background.color=0x552a2e33
   background.corner_radius=8
   background.height=26
   background.border_width=1
-  background.border_color=0x22ffffff
+  background.border_color=0x002a2e33
+  background.blur_radius=30
 )
 sketchybar --default "${default[@]}"
 
 ##### Left Items #####
 
-# 1. Apple Logo
-# sketchybar --add item apple left \
-#            --set apple icon= label.drawing=off icon.padding_right=10 icon.font="Hack Nerd Font:Regular:16.0"
+sketchybar --add event aerospace_workspace_change
 
+AEROSPACE_WORKSPACES=$(aerospace list-workspaces --all 2>/dev/null || echo "123456")
+
+for ws in $AEROSPACE_WORKSPACES; do
+  sketchybar --add item aerospace.$ws left \
+    --set aerospace.$ws \
+    label="$ws" \
+    icon.drawing=off \
+    label.color=$INACTIVE_WORKSPACE \
+    background.drawing=off \
+    padding_left=0 \
+    padding_right=0 \
+    script="$PLUGIN_DIR/aerospace_workspace.sh $ws" \
+    --subscribe aerospace.$ws aerospace_workspace_change
+done
+
+sketchybar --trigger aerospace_workspace_change
+
+sketchybar --add item separator left \
+  --set separator label="❯" \
+  label.color=0x60ffffff \
+  background.drawing=off \
+  padding_left=0 \
+  padding_right=0 \
+  icon.drawing=off
+
+# sketchybar --add item aerospace.workspace left \
+#            --set aerospace.workspace \
+#                  update_freq=1 \
+#                  icon.color=0xffF9E2AF \
+#                  label.color=0xffF9E2AF \
+#                  script="$PLUGIN_DIR/aerospace_workspace.sh" \
+#            --subscribe aerospace.workspace aerospace_workspace_change
+#  icon=󰍹 \
 # 2. Current User Name
-sketchybar --add item user left \
-           --set user icon= label.color=0xffE1D3F2 icon.color=0xffE1D3F2 label="$USER" icon.padding_right=4 label.padding_right=10
+# sketchybar --add item user left \
+#            --set user icon= label.color=0xffE1D3F2 icon.color=0xffE1D3F2 label="$USER" icon.padding_right=4 label.padding_right=10
 
 # 3. Front Application
 sketchybar --add item front_app left \
-           --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
-                 label.padding_left=10 \
-                 label.color=0xffA1D0E3 \
-           --subscribe front_app front_app_switched
+  --set front_app icon.drawing=off script="$PLUGIN_DIR/front_app.sh" \
+  label.padding_left=10 \
+  label.color=$WHITE \
+  --subscribe front_app front_app_switched
 
 # 4. Music Player
 sketchybar --add item music left \
-           --set music \
-             script="$PLUGIN_DIR/music.sh" \
-             icon= \
-             label.padding_left=0 \
-             icon.padding_right=5 \
-             label.color=0xffa6e3a1 \
-             icon.color=0xffa6e3a1 \
-             click_script="open -a Spotify" \
-             update_freq=2 \
-             drawing=off \
-           --subscribe music media_change
+  --set music \
+  script="$PLUGIN_DIR/music.sh" \
+  icon= \
+  label.padding_left=0 \
+  icon.padding_right=5 \
+  label.color=$SPOTIFY_GLASS \
+  icon.color=$SPOTIFY_GLASS \
+  update_freq=15 \
+  drawing=on \
+  --subscribe music media_change
 
 ##### Right Items #####
 
+# I have separated these into individual calls to prevent one error
+# from breaking the entire right-side bar.
+
 sketchybar --add item clock.time right \
-           --set clock.time update_freq=10 icon= script="$PLUGIN_DIR/clock.sh" \
+  --set clock.time update_freq=10 icon= script="$PLUGIN_DIR/clock.sh"
 
 sketchybar --add item clock.date right \
-           --set clock.date update_freq=3600 icon= script="$PLUGIN_DIR/clock.sh" \
+  --set clock.date update_freq=3600 icon= script="$PLUGIN_DIR/clock.sh"
 
 sketchybar --add item weather right \
-           --set weather script="$PLUGIN_DIR/weather.sh" \
-                         icon=\
-                         update_freq=300 \
-                         label.padding_left=0 \
-                         icon.padding_right=8 \
-                         label.color=$WHITE \
-                         icon.color=$WHITE \
-                         click_script="open -a Weather" \
-                         drawing=on
-
-sketchybar --add item volume right \
-           --set volume script="$PLUGIN_DIR/volume.sh" \
-                         padding_right=4 \
-                         icon.font="Hack Nerd Font:Regular:23.0" \
-           --subscribe volume volume_change
+  --set weather script="$PLUGIN_DIR/weather.sh" \
+  icon= \
+  update_freq=300 \
+  label.padding_left=0 \
+  icon.padding_right=8 \
+  label.color=$GLASS_TEXT \
+  icon.color=$GLASS_TEXT \
+  click_script="open -a Weather" \
+  drawing=on
 
 sketchybar --add item battery right \
-           --set battery update_freq=120 \
-                         script="$PLUGIN_DIR/battery.sh" \
-                         icon.font="icomoon:Regular:23.0" \
-                         padding_right=4 \
-           --subscribe battery system_woke power_source_change
+  --set battery update_freq=120 \
+  script="$PLUGIN_DIR/battery.sh" \
+  icon.font="icomoon:Regular:23.0" \
+  padding_right=4 \
+  --subscribe battery system_woke power_source_change
+sketchybar --add item volume right \
+  --set volume script="$PLUGIN_DIR/volume.sh" \
+  padding_right=4 \
+  icon.font="Hack Nerd Font:Regular:23.0" \
+  --subscribe volume volume_change
 
-sketchybar --add item disk right \
-           --set disk script="$PLUGIN_DIR/disk.sh" \
-                      icon= \
-                      update_freq=3 \
-                      label.padding_left=0 \
-                      icon.padding_right=8 \
-                      label.color=$WHITE \
-                      icon.color=$WHITE
-                      # label.color=0xfff2cdcd \
-                      # icon.color=0xfff2cdcd
+# sketchybar --add item disk right \
+#            --set disk script="$PLUGIN_DIR/disk.sh" \
+#                       icon= \
+#                       update_freq=3 \
+#                       label.padding_left=0 \
+#                       icon.padding_right=8 \
+#                       label.color=$WHITE \
+#                       icon.color=$WHITE
+# label.color=0xfff2cdcd \
+# icon.color=0xfff2cdcd
 
+##### Force Update #####
 sketchybar --update
