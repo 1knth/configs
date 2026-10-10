@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Load the existing bar appearance and non-workspace items, then replace only
+# the AeroSpace workspace items with Dinky's numbered workspaces.
+source "$CONFIG_DIR/sketchybarrc"
+
+# Remove the AeroSpace workspace items created by the original config.
+for ws in {1..20} 123456; do
+  sketchybar --remove "aerospace.$ws" 2>/dev/null || true
+done
+
+DINKY=/Applications/dinky.app/Contents/MacOS/dinky
+PLUGIN_DIR="$CONFIG_DIR/plugins"
+
+# Dinky reports all configured workspaces, including those on other displays.
+DINKY_WORKSPACES=$("$DINKY" list-workspaces --all --monitor all 2>/dev/null) || exit 1
+
+for ws in $DINKY_WORKSPACES; do
+  sketchybar --add item "dinky.$ws" left \
+    --set "dinky.$ws" \
+    label="$ws" \
+    icon.drawing=off \
+    label.color="$INACTIVE_WORKSPACE" \
+    background.drawing=off \
+    padding_left=0 \
+    padding_right=0 \
+    update_freq=1 \
+    script="$PLUGIN_DIR/dinky_workspace.sh" \
+    click_script="$DINKY workspace $ws"
+done
+
+# Keep the workspace list before the separator and front-app item.
+for ws in $DINKY_WORKSPACES; do
+  sketchybar --move "dinky.$ws" before separator
+done
+
+sketchybar --update
