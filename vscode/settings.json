@@ -1,0 +1,105 @@
+// last updated: march 05, 2026
+// requires 'custom ui style' extension
+{
+  "explorer.confirmDelete": false,
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "git.autofetch": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "terminal.integrated.enableMultiLinePasteWarning": false,
+  "code-runner.runInTerminal": true,
+  "explorer.confirmDragAndDrop": false,
+
+  "scm.diffDecorations": "gutter",
+  "editor.hideCursorInOverviewRuler": true,
+  "workbench.editor.showTabs": "single",
+  "workbench.activityBar.location": "top",
+  "window.customTitleBarVisibility": "never",
+  "window.commandCenter": false,
+  "workbench.colorTheme": "Sublime Text 4 Theme",
+  "workbench.sideBar.location": "right",
+  "workbench.colorCustomizations": {
+    "editorLineNumber.foreground": "#737373",
+    "editorLineNumber.activeForeground": "#cdcd9b",
+
+
+    // search box
+    "quickInput.foreground": "#ececec",
+    "input.foreground": "#ffdbae",
+
+    "quickInputList.focusBackground": "#292f35",
+    "quickInputList.focusForeground": "#ffdbae",
+
+    "pickerGroup.foreground": "#ffdbae",
+    "pickerGroup.border": "#a5a5a5",
+
+    "keybindingLabel.foreground": "#121212",
+    "keybindingLabel.border": "#121212",
+    "keybindingLabel.bottomBorder": "#121212",
+    "keybindingLabel.background": "#ffdbae",
+
+    "descriptionForeground": "#4a4a4a",
+    "list.deemphasizedForeground": "#ffdbae",
+    "list.highlightForeground": "#ececec"
+  },
+  "workbench.tree.enableStickyScroll": false,
+  "editor.stickyScroll.enabled": false,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "chat.viewSessions.orientation": "stacked",
+  "workbench.editor.enablePreview": false,
+  "editor.glyphMargin": false,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.minimap.enabled": false,
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.hidesExplorerArrows": false,
+  // "workbench.tree.indent": 8,
+  "workbench.tree.renderIndentGuides": "none",
+  "explorer.compactFolders": true,
+  "breadcrumbs.enabled": false,
+  "workbench.layoutControl.enabled": false,
+  "chat.agentsControl.enabled": false,
+  "window.zoomLevel": 3,
+  "workbench.startupEditor": "none",
+  "workbench.tips.enabled": false,
+  "window.titleBarStyle": "native",
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorStyle": "block",
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "chat.viewSessions.enabled": false,
+  "redhat.telemetry.enabled": false,
+  
+  "custom-ui-style.electron": {
+    "titleBarStyle": "hiddenInset",
+    "trafficLightPosition": {
+      "x": 20,
+      "y": 17.5
+    }
+  },
+  "custom-ui-style.stylesheet": {
+    ".monaco-workbench .part.editor > .content .editor-group-container > .title .title-actions": "display: none !important;",
+    ".monaco-workbench .part.editor > .content .editor-group-container > .title": "background-color: #1a1a1c !important; -webkit-app-region: drag !important;",
+    ".title.show-file-icons .label-container .monaco-icon-label.file-icon": "align-items: center; padding: 1px 0px 0px 80px !important",
+    ".sidebar .title-label": "padding: 0 !important",
+    ".sidebar": "border: none !important",
+
+    ".monaco-workbench:not(.fullscreen) .part.editor > .content .editor-group-container > .title": "-webkit-app-region: drag !important;",
+    ".monaco-workbench:not(.fullscreen) .part.editor > .content .editor-group-container > .title .tab": "-webkit-app-region: no-drag !important;",
+    ".monaco-workbench:not(.fullscreen) .part.editor > .content .editor-group-container > .title .title-actions": "-webkit-app-region: no-drag !important;",
+    ".monaco-workbench:not(.fullscreen) .part.editor > .content .editor-group-container > .title .breadcrumbs-control": "-webkit-app-region: no-drag !important;",
+    ".monaco-editor .cursors-layer .cursor": "background-image: linear-gradient(0deg, #ffb253 20%, #ffdbae 100%)",
+
+    ".quick-input-widget": "top: 50% !important; transform: translateY(-50%) !important; margin-top: 0 !important; box-shadow: 0px 8px 24px rgba(0, 0, 0, .35) !important; padding: 0px 3px 10px 0px !important; background-image: linear-gradient(#2E2A23 0%, #1F1C19 100%) !important; border-radius: 5px !important; border: none !important;",
+    ".quick-input-list, .quick-input-list .list_id_6": "min-height: 200px !important; background-color: transparent !important;",
+    ".monaco-list-rows": "background: transparent !important;",
+    ".quick-input-filter .monaco-inputbox": "border-radius: 12px !important; padding: 4px !important; border: none !important; background-color: transparent !important; !important; font-size: 16px !important; margin-bottom: 0px !important; outline: none !important; box-shadow: none !important;",
+    ".monaco-inputbox input::placeholder": "color: #ececec !important;",
+    ".quick-input-inline-action-bar .actions-container .action-item": "margin-bottom: 8px !important;",
+    ".quick-input-header": "align-items: center;",
+
+    ".monaco-editor-hover": " box-shadow: 0px 8px 32px rgba(0,0,0,.10) !important; margin: 20px !important; background-image: linear-gradient(#3c3c50 0%, #2a2b38 70%) !important; backdrop-filter: blur(3px) !important; border-radius: 4px !important; border: none !important; outline: 0px !important;",
+    ".monaco-hover": " box-shadow: 0px 8px 24px rgba(0,0,0,.45) !important; background-image: linear-gradient(#3c3c50 0%, #2a2b38 100%) !important; backdrop-filter: blur(3px) !important; border-radius: 16px !important; border: none !important; outline: 0px !important;",
+    ".monaco-resizable-hover": "border: none !important;",
+
+    ".slider": "position: absolute !important; right: 1px !important; width: 3px !important; background: #ffdbae !important; left: auto !important;"
+  },
+}
